@@ -66,10 +66,10 @@ def login(connection):
             return result[0], result[1], result[2]  # 학번, 사용자 이름, 동아리 이름
         else:
             print("로그인 실패: 학번 또는 전화번호를 확인하세요.")
-            return None, None
+            return None, None, None
     except mysql.connector.Error as err:
         print(f"로그인 에러: {err}")
-        return None, None
+        return None, None, None
 
 # 동아리 일정 
 def manage_schedule(connection, user_club):
