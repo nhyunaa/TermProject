@@ -34,7 +34,7 @@ def register(connection):
         userphonenumber = input("사용자 전화번호 입력: ")
         user_club = input("소속 동아리 입력: ")
 
-        # 동아리가 존재하는지 확인
+        
         if not check_club_exists(cursor, user_club):
             print(f"입력한 동아리 '{user_club}'는 존재하지 않습니다. 다른 동아리를 입력해 주세요.")
             return
@@ -165,7 +165,6 @@ def update_schedule(connection, user_club):
         # 일정 조회
         schedules = view_schedules(connection, user_club)
         
-        # 일정이 없다면 수정할 수 없도록 처리
         if not schedules:
             print("수정할 일정이 없습니다.")
             return
@@ -181,15 +180,15 @@ def update_schedule(connection, user_club):
 
         choice = input("수정할 항목 번호를 입력하세요: ").strip()
 
-        # 수정할 항목에 따라 처리
-        if choice == "1" or choice == "4":  # 이벤트 이름 수정
+    
+        if choice == "1" or choice == "4":  
             event_name = input("수정할 이벤트 이름을 입력하세요: ").strip()
-        if choice == "2" or choice == "4":  # 이벤트 날짜 수정
+        if choice == "2" or choice == "4":  
             event_date = input("수정할 이벤트 날짜를 입력하세요 (YYYY-MM-DD): ").strip()
-        if choice == "3" or choice == "4":  # 이벤트 시간 수정
+        if choice == "3" or choice == "4": 
             event_time = input("수정할 이벤트 시간을 입력하세요 (HH:MM): ").strip()
 
-        # 선택한 항목에 맞춰 업데이트
+        # 이벤트 업데이트 쿼리문
         update_query = "UPDATE schedule SET"
         params = []
 
@@ -205,7 +204,7 @@ def update_schedule(connection, user_club):
             update_query += " event_time = %s"
             params.append(event_time)
 
-        # 이벤트 ID와 동아리 이름을 조건으로 추가
+        
         update_query += " WHERE schedule_id = %s AND clubname = %s"
         params.extend([event_id, user_club])
 
@@ -291,7 +290,7 @@ def approve_clubmember(connection, user_club):
         # 승인할 회원 선택
         uid_to_approve = input("승인할 회원의 학번을 입력하세요: ")
 
-        # 상태를 '1'로 업데이트 (승인)
+        # 승인상태 처리
         update_query = """
         UPDATE register
         SET approval_status = 1
